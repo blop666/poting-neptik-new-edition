@@ -2,96 +2,20 @@
 
 import React, { useState } from "react";
 import { MdEdit, MdDelete } from "react-icons/md";
-import { useGetCandidate, useDeleteCandidate } from "@/backend/hooks/useCandidate";
+import {
+  useGetCandidate,
+  useDeleteCandidate,
+} from "@/backend/hooks/useCandidate";
 import { FormCreate } from "@/components/dashboard/data-page-comp/formCreate";
 import { FormUpdateSide } from "@/components/dashboard/data-page-comp/formUpdate";
 import { ConfirmModal } from "@/components/confirm-modal";
 import { CandidateListContent } from "@/components/dashboard/data-page-comp/candidate-list";
-
-// 1. SUB-KOMPONEN BARU: Khusus untuk fetch dan merender list kandidat
-// const CandidateListContent = ({ 
-//   setEditingCandidate, 
-//   triggerDelete 
-// }: { 
-//   setEditingCandidate: (item: any) => void; 
-//   triggerDelete: (id: number, name: string) => void;
-// }) => {
-//   // Hook dipanggil di sini agar ikut ter-fetch ulang saat komponen ini di-remount
-//   const { candidates } = useGetCandidate();
-
-//   return (
-//     <>
-//       {candidates.map((item, index) => (
-//         <div
-//           key={item.id}
-//           className="border mt-4 border-gray-200 rounded-lg p-4 gap-4 flex flex-row"
-//         >
-//           <div className="bg-white rounded-lg border-gray-300 border">
-//             <img
-//               src={item.photoUrl || "/placeholdernew.png"}
-//               alt="candidate"
-//               className="w-[160px] h-[206px] object-cover rounded-lg"
-//             />
-//           </div>
-
-//           <div className="flex flex-row justify-between w-full">
-//             <div className="flex flex-col gap-1 text-left">
-//               <span className="text-black/80 font-bold text-lg">
-//                 {index + 1} - {item.name}
-//               </span>
-
-//               <div className="flex flex-col">
-//                 <span className="text-red-500 text-[12px] font-bold">Visi</span>
-//                 <span className="text-gray-400 font-medium text-[10px]">
-//                   {item.vision}
-//                 </span>
-//               </div>
-
-//               <div className="flex flex-col">
-//                 <span className="text-red-500 text-[12px] font-bold">Misi</span>
-//                 <ul className="text-gray-400 font-medium text-[11px] list-disc list-inside space-y-0.5">
-//                   {item.mission.split("\n").map((misiText, indexMisi) => (
-//                     <li key={indexMisi}>{misiText}</li>
-//                   ))}
-//                 </ul>
-//               </div>
-//             </div>
-
-//             <div className="flex flex-row gap-10 justify-center">
-//               <div className="flex flex-col text-center">
-//                 <span className="text-black text-3xl font-bold">
-//                   {item.voteCount}
-//                 </span>
-//                 <span className="text-sm font-medium text-black">Suara</span>
-//               </div>
-
-//               <div className="flex flex-col gap-3">
-//                 <button
-//                   onClick={() => setEditingCandidate(item)}
-//                   className="flex flex-row gap-3 cursor-pointer text-black font-bold hover:text-red-500 transition-colors"
-//                 >
-//                   <MdEdit className="w-5 h-5" />
-//                   <span className="text-sm">Edit</span>
-//                 </button>
-
-//                 <button
-//                   onClick={() => triggerDelete(item.id, item.name)}
-//                   className="flex flex-row gap-1 text-black font-bold hover:text-red-700 transition-colors"
-//                 >
-//                   <MdDelete className="w-5 h-5 text-red-500" />
-//                   <span className="text-red-500 text-sm">Hapus</span>
-//                 </button>
-//               </div>
-//             </div>
-//           </div>
-//         </div>
-//       ))}
-//     </>
-//   );
-// };
+import { motion } from "framer-motion";
 
 // 2. KOMPONEN UTAMA
 const dataPage = () => {
+  const ease = [0.22, 1, 0.36, 1] as const;
+
   // State angka kunci untuk memicu remount komponen list
   const [refreshKey, setRefreshKey] = useState(0);
   const [editingCandidate, setEditingCandidate] = useState<any | null>(null);
@@ -120,7 +44,13 @@ const dataPage = () => {
   };
 
   return (
-    <div className="flex flex-col gap-7 p-8 w-full h-full">
+    <motion.div
+      initial={{ opacity: 0, x: 50 }}
+      whileInView={{ opacity: 1, x: 0 }}
+      viewport={{ once: true, amount: 0.1 }}
+      transition={{ duration: 0.6, delay: 0.2, ease }}
+      className="flex flex-col gap-7 p-8 w-full h-full"
+    >
       <span className="text-black font-medium text-4xl">
         Kelola <span className="text-red-500">Kandidat</span>
       </span>
@@ -171,7 +101,7 @@ const dataPage = () => {
         confirmText="Ya, Hapus Data"
         variant="danger"
       />
-    </div>
+    </motion.div>
   );
 };
 

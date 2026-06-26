@@ -10,7 +10,66 @@ export const CandidateListContent = ({
   triggerDelete: (id: number, name: string) => void;
 }) => {
   // Hook dipanggil di sini agar ikut ter-fetch ulang saat komponen ini di-remount
-  const { candidates } = useGetCandidate();
+  const { candidates, isFetching } = useGetCandidate();
+
+  // 1. INDIKATOR LOADING (SKELETON SCREEN) YANG BAGUS
+  if (isFetching && candidates.length === 0) {
+    return (
+      <>
+        {/* Kita looping 2 baris skeleton sebagai representasi loading kartu */}
+        {[...Array(2)].map((_, i) => (
+          <div
+            key={i}
+            className="border mt-4 border-gray-200 rounded-lg p-4 gap-4 flex flex-row animate-pulse"
+          >
+            {/* Foto Skeleton */}
+            <div className="w-[160px] h-[206px] bg-gray-200 rounded-lg" />
+
+            {/* Konten Kanan Skeleton */}
+            <div className="flex flex-row justify-between w-full">
+              <div className="flex flex-col gap-4 text-left w-2/3">
+                {/* Nama Kandidat */}
+                <div className="h-6 bg-gray-200 rounded-md w-3/4" />
+                
+                {/* Visi */}
+                <div className="flex flex-col gap-1.5">
+                  <div className="h-4 bg-gray-200 rounded-md w-12" />
+                  <div className="h-3 bg-gray-200 rounded-md w-full" />
+                </div>
+
+                {/* Misi */}
+                <div className="flex flex-col gap-1.5">
+                  <div className="h-4 bg-gray-200 rounded-md w-12" />
+                  <div className="h-3 bg-gray-200 rounded-md w-5/6" />
+                  <div className="h-3 bg-gray-200 rounded-md w-4/6" />
+                </div>
+              </div>
+
+              {/* Stats & Button Skeleton */}
+              <div className="flex flex-row gap-10 justify-center items-start">
+                <div className="flex flex-col items-center gap-2">
+                  <div className="h-8 bg-gray-200 rounded-md w-12" />
+                  <div className="h-4 bg-gray-200 rounded-md w-10" />
+                </div>
+                <div className="flex flex-col gap-3">
+                  <div className="h-5 bg-gray-200 rounded-md w-16" />
+                  <div className="h-5 bg-gray-200 rounded-md w-16" />
+                </div>
+              </div>
+            </div>
+          </div>
+        ))}
+      </>
+    );
+  }
+
+  if (candidates.length === 0) {
+    return (
+      <div className="text-center py-10 border border-dashed border-gray-300 rounded-lg mt-4 text-gray-400 font-medium">
+        Belum ada data kandidat.
+      </div>
+    );
+  }
 
   return (
     <>

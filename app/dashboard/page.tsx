@@ -7,6 +7,7 @@ import { CardStats } from "@/components/dashboard/card";
 import dynamic from "next/dynamic";
 import { useDashboardStats } from "@/backend/hooks/useDashboardStats";
 import { ElectionTimer } from "@/components/dashboard/timer";
+import { motion } from "framer-motion";
 
 const Chart = dynamic(
   () => import("react-apexcharts" as any).then((mod) => mod.default || mod),
@@ -20,9 +21,6 @@ const Chart = dynamic(
 
 // Fallback jika import di atas terlalu ketat di beberapa versi, gunakan ini:
 const ApexChart = dynamic(() => import("react-apexcharts"), { ssr: false });
-
-
-
 
 const CHART_COLORS = ["#ED1C24", "#171B1A", "#9CA3AF"];
 const BORDER_COLORS = [
@@ -50,30 +48,6 @@ const VotingStats = () => {
       </div>
     );
   }
-
-  // const candidateData: candidateType[] = [
-  //   {
-  //     id: 1,
-  //     name: "Lingga Ramadhan",
-  //     image: "/placeholdernew.png",
-  //     color: "red-400",
-  //     totalVote: 100,
-  //   },
-  //   {
-  //     id: 2,
-  //     name: "Hafizh Al Ghazali",
-  //     image: "/placeholdernew.png",
-  //     color: "black",
-  //     totalVote: 30,
-  //   },
-  //   {
-  //     id: 3,
-  //     name: "Farel Rizky",
-  //     image: "/placeholdernew.png",
-  //     color: "gray-400",
-  //     totalVote: 50,
-  //   },
-  // ];
 
   // --- CONFIGURASI APEXCHARTS (MUI LOOKALIKE) ---
   const chartSeries = candidates.map((c) => c.voteCount); // Ambil angka vote [100, 30, 50]
@@ -135,8 +109,16 @@ const VotingStats = () => {
     },
   };
 
+  const ease = [0.22, 1, 0.36, 1] as const;
+
   return (
-    <div className=" p-8 flex flex-col gap-7 w-full ">
+    <motion.div
+      initial={{ opacity: 0, x: 50 }}
+      whileInView={{ opacity: 1, x: 0 }}
+      viewport={{ once: true, amount: 0.1 }}
+      transition={{ duration: 0.6, delay: 0.2, ease }}
+      className=" p-8 flex flex-col gap-7 w-full "
+    >
       <span
         style={{ fontFamily: '"Plus Jakarta Sans", sans-serif' }}
         className="text-3xl font-semibold text-black"
@@ -224,7 +206,6 @@ const VotingStats = () => {
         </div>
         {/* End left side */}
 
-
         {/* Timer Section */}
 
         {/* <div className="border p-4 text-center bg-white border-gray-200 rounded-2xl flex flex-col justify-around">
@@ -239,10 +220,10 @@ const VotingStats = () => {
           </button>
         </div> */}
 
-          <ElectionTimer />
+        <ElectionTimer />
         {/* End Timer Section */}
       </div>
-    </div>
+    </motion.div>
   );
 };
 

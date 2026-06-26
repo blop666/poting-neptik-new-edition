@@ -16,8 +16,11 @@ import {
 } from "react-icons/fa";
 import { useTokenManagement } from "@/backend/hooks/useTokenManagement";
 import { ConfirmModal } from "@/components/confirm-modal";
+import { motion } from "framer-motion";
 
 const keypage = () => {
+  const ease = [0.22, 1, 0.36, 1] as const;
+
   const {
     isLoading,
     review,
@@ -44,7 +47,13 @@ const keypage = () => {
   } = useTokenManagement();
 
   return (
-    <div className="p-5 flex flex-col gap-7 w-full">
+    <motion.div
+      initial={{ opacity: 0, x: 50 }}
+      whileInView={{ opacity: 1, x: 0 }}
+      viewport={{ once: true, amount: 0.1 }}
+      transition={{ duration: 0.6, delay: 0.2, ease }}
+      className="p-5 flex flex-col gap-7 w-full"
+    >
       <span className="text-black font-bold text-4xl">Generate Token</span>
 
       <div className="grid grid-cols-3 gap-3">
@@ -316,7 +325,7 @@ const keypage = () => {
           variant={confirmActionType === "send" ? "primary" : "danger"}
         />
       </div>
-    </div>
+    </motion.div>
   );
 };
 
