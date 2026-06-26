@@ -10,13 +10,14 @@ import ContactUs from "@/components/contact-us";
 
 import emailjs from "@emailjs/browser";
 import { useEffect } from "react";
+import VotingSection from "@/components/voting-section";
 
 export default function Home() {
   useEffect(()=>{
     emailjs.init({publicKey: process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY})
   },[])
   return (
-    <div className="min-h-screen bg-[radial-gradient(#ED1C2415_3px,transparent_1px)] bg-size-[30px_30px] pt-10">
+    <div className="pt-10">
       <Navbar />
       <HeroSection />
       <AboutSection />
@@ -24,6 +25,7 @@ export default function Home() {
       <VisionMissionSection />
       <DivisionsSection />
       <Achivement />
+      <VotingSection />
       <ContactUs />
     </div>
   );
