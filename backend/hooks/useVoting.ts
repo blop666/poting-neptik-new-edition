@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import {getCandidate} from "../services/candidateService";
 import { VotingSubmit } from "../services/votingService";
+import {toast, Toaster} from "sonner"
 
 export interface CandidateType {
   id: number;
@@ -38,7 +39,8 @@ export const useVoting = () => {
         }
       } catch (error) {
         console.error("Gagal memuat data kandidat:", error);
-        alert("Waduh, gagal mengambil daftar calon ketua dari server.");
+        toast.error("Error, cant get candidate data from server")
+
       } finally {
         setIsFetching(false);
       }
@@ -55,14 +57,15 @@ export const useVoting = () => {
       const result = await VotingSubmit(token, selectedCandidate?.id);
 
       if (result.success) {
-        alert(result.message);
+        // alert(result.message);
+        toast.success(result.message)
         sessionStorage.removeItem("voter_token");
         setSelectedCandidate(null);
         router.push("/voting/submit");
       }
     } catch (error: any) {
       const msg = error.response?.data?.message || "Terjadi kesalahan sistem.";
-      alert(`Gagal mengirim suara: ${msg}`);
+      toast.error(`Cant send Vote: ${msg}`)
     } finally {
       setIsLoading(false);
     }

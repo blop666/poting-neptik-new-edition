@@ -28,7 +28,6 @@ export const useTokenManagement = () => {
   const [search, setSearch] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
 
-  // 👈 TAMBAHAN STATE UNTUK MODAL (Biar sinkron sama UI Parent)
   const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
   const [confirmActionType, setConfirmActionType] = useState<"send" | "reset" | null>(null);
 

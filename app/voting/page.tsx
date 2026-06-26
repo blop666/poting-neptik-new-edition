@@ -5,6 +5,8 @@ import React from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import StarIcon from "@/components/ui/StarIcon";
 import { useVoting } from "@/backend/hooks/useVoting";
+import { Toaster } from "sonner";
+import { GrReturn } from "react-icons/gr";
 
 const page = () => {
   const {
@@ -18,9 +20,8 @@ const page = () => {
 
   return (
     <div className="relative min-h-screen w-full flex flex-col items-center justify-center gap-5 p-4 md:p-8 overflow-x-hidden">
-      
       {/* Animasi Judul: Fade in & Slide down pelan */}
-      <motion.span 
+      <motion.span
         initial={{ opacity: 0, y: -15 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
@@ -31,11 +32,10 @@ const page = () => {
       </motion.span>
 
       <div className="w-full flex flex-col sm:flex-row sm:flex-wrap justify-center items-center gap-6 md:gap-10 max-w-7xl p-2 mt-5">
-        
         {/* Candidate Card */}
         {candidates.map((candidate) => (
-          <motion.div 
-            key={candidate.id} 
+          <motion.div
+            key={candidate.id}
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4 }}
@@ -75,14 +75,14 @@ const page = () => {
 
       <AnimatePresence>
         {selectedCandidate && (
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm p-4"
           >
             {/* Efek Pop-up halus pada kotak modal */}
-            <motion.div 
+            <motion.div
               initial={{ scale: 0.95, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.95, opacity: 0 }}
@@ -121,6 +121,23 @@ const page = () => {
         )}
       </AnimatePresence>
 
+      <Toaster richColors position="top-center" closeButton />
+      <motion.div
+        initial={{ opacity: 0, y: 15 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.9 }}
+        className="absolute md:bottom-12 md:left-25 bottom-8 mt-12 left-4 flex gap-2 items-baseline justify-start md:justify-start"
+      >
+        <div className="bg-[#ED1C24] p-2 rounded-lg text-white flex items-center justify-center">
+          <GrReturn size={14} />
+        </div>
+        <a
+          href="/"
+          className="text-[#ED1C24] font-semibold text-sm md:text-md hover:underline"
+        >
+          Kembali
+        </a>
+      </motion.div>
     </div>
   );
 };
