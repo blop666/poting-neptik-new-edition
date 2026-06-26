@@ -1,8 +1,8 @@
 import axios from "axios";
 import { apiAuth } from "./api";
 
-export const generateTokenAPI = async (amount: number) => {
-  const response = await apiAuth.post("/admin/tokens/generate", { amount });
+export const generateTokenAPI = async (emails: string[]) => {
+  const response = await apiAuth.post("/admin/tokens/generate", { emails });
   return response.data;
 };
 

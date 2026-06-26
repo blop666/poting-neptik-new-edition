@@ -9,7 +9,6 @@ import {
 import { log } from "console";
 import emailjs from "@emailjs/browser";
 import { toast } from "sonner";
-import axios from "axios";
 
 export interface TokenItem {
   id: number;
@@ -39,7 +38,7 @@ export const useTokenManagement = () => {
       if (res.success) {
         const mapped = res.data.tokens.map((item: any) => ({
           id: item.id,
-          email: "",
+          email: item.email || "",
           token: item.token,
           status: item.isUsed ? "Used" : "Not Sent",
         }));
@@ -109,7 +108,7 @@ export const useTokenManagement = () => {
 
     setIsLoading(true);
     try {
-      const res = await generateTokenAPI(emailsFromCSV.length);
+      const res = await generateTokenAPI(emailsFromCSV);
       if (res.success) {
         const backendTokens = res.data.tokens;
         setTokensData(
@@ -196,12 +195,7 @@ export const useTokenManagement = () => {
       setIsLoading(true);
       const toastId = toast.loading("Menghapus data token dari database...");
       try {
-        const token = localStorage.getItem("admin_token");
-        const deletePromises = tokensData.map((item) =>
-          axios.delete(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000/api'}/admin/tokens/${item.id}`, {
-            headers: { Authorization: `Bearer ${token}` },
-          })
-        );
+        const deletePromises = tokensData.map((item) => deleteTokenAPI(item.id));
 
         await Promise.all(deletePromises);
 
