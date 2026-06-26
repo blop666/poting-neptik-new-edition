@@ -25,7 +25,7 @@ export const useVoting = () => {
   useEffect(() => {
     const savedToken = sessionStorage.getItem("voter_token");
     if (!savedToken) {
-      router.push("/voting/login");
+      router.push("/login");
       return;
     }
     setToken(savedToken);
