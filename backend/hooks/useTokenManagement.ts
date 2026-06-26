@@ -169,10 +169,10 @@ export const useTokenManagement = () => {
 
         try {
           await emailjs.send(
-            "service_npe0mnk",
-            "template_3up14s9",
+            process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID!,
+            process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID!,
             templateParams,
-            "iF-rYJFIHjhQ4PWbP",
+            process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY!,
           );
           successCount++;
           setTokensData((prev) =>
@@ -198,7 +198,7 @@ export const useTokenManagement = () => {
       try {
         const token = localStorage.getItem("admin_token");
         const deletePromises = tokensData.map((item) =>
-          axios.delete(`http://localhost:3000/api/admin/tokens/${item.id}`, {
+          axios.delete(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000/api'}/admin/tokens/${item.id}`, {
             headers: { Authorization: `Bearer ${token}` },
           })
         );

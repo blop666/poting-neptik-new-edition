@@ -145,8 +145,8 @@ const useUpdateCandidate = (
   const router = useRouter();
 
   const uploadToCloudinary = async (file: File): Promise<string | null> => {
-    const cloudName = "dlnffdgtc";
-    const uploadPreset = "ml_default";
+    const cloudName = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME || "your-cloud-name";
+    const uploadPreset = process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET || "your-upload-preset";
 
     const formData = new FormData();
     formData.append("file", file);

@@ -1,8 +1,8 @@
 import axios from "axios";
 
 const uploadToCloudinary = async (file: File) => {
-    const cloud_name= "dlnffdgtc"
-    const preset="ml_default"
+    const cloud_name = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME || "your-cloud-name";
+    const preset = process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET || "your-upload-preset";
 
     const formData = new FormData();
     formData.append("file", file)
