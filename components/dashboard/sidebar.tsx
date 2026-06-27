@@ -6,6 +6,8 @@ import { IoIosStats } from "react-icons/io";
 import { FaUser } from "react-icons/fa";
 import { FaKey } from "react-icons/fa6";
 import { motion } from "framer-motion";
+import { ButtonLogOut } from "../ui/button";
+import { CiLogout } from "react-icons/ci";
 
 export const SidebarDashboard = () => {
   const ease = [0.22, 1, 0.36, 1] as const;
@@ -46,24 +48,27 @@ export const SidebarDashboard = () => {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, amount: 0.1 }}
         transition={{ duration: 0.6, delay: 0.8, ease }}
-        className="flex flex-col py-4 gap-4 w-full"
+        className="flex flex-col justify-between  h-full w-full"
       >
-        <ButtonDashboard
-          name="Statistik Voting"
-          logo={IoIosStats}
-          href="/dashboard"
-          
-        />
-        <ButtonDashboard
-          name="Data Voting"
-          logo={FaUser}
-          href="/dashboard/data-page"
-        />
-        <ButtonDashboard
-          name="Generate Token"
-          logo={FaKey}
-          href="/dashboard/key-page"
-        />
+        <div className="flex flex-col gap-4 py-4">
+          <ButtonDashboard
+            name="Statistik Voting"
+            logo={IoIosStats}
+            href="/dashboard"
+          />
+          <ButtonDashboard
+            name="Data Voting"
+            logo={FaUser}
+            href="/dashboard/data-page"
+          />
+          <ButtonDashboard
+            name="Generate Token"
+            logo={FaKey}
+            href="/dashboard/key-page"
+          />
+        </div>
+
+        <ButtonLogOut name="Log Out" logo={CiLogout} />
       </motion.div>
     </motion.div>
   );

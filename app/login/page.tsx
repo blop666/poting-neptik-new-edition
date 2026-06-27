@@ -5,6 +5,7 @@ import { GrReturn } from "react-icons/gr";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { motion } from "framer-motion";
+import { Toaster } from "sonner";
 
 const LoginPage = () => {
   const [tokenInput, setTokenInput] = useState("");
@@ -23,7 +24,6 @@ const LoginPage = () => {
   return (
     <div className="w-full min-h-screen flex justify-center items-center p-4 sm:p-6 overflow-x-hidden">
       <div className="flex flex-col md:flex-row gap-10 md:gap-24 max-w-6xl w-full items-center justify-center py-6">
-        
         <motion.div
           initial={{ opacity: 0, x: -30 }}
           whileInView={{ opacity: 1, x: 0 }}
@@ -99,6 +99,7 @@ const LoginPage = () => {
           </form>
         </motion.div>
 
+        <Toaster richColors position="top-center" closeButton />
       </div>
     </div>
   );
