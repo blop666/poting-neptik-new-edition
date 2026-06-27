@@ -77,7 +77,7 @@ const LoginAdminPage = () => {
                 Masukkan Password
               </label>
               <input
-                type="text"
+                type="password"
                 name="password"
                 placeholder="*******"
                 className="w-full border border-red-300 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-red-400 placeholder-gray-300 text-gray-700"
