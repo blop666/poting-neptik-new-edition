@@ -1,6 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import { useCreateCandidate } from "@/backend/hooks/useCandidate";
+import {toast} from "sonner"
 
 interface successType {
   onSuccess: () => void
@@ -15,7 +16,8 @@ export const FormCreate = ({onSuccess}: successType) => {
     const file = e.target.files?.[0];
     if (file) {
       if (file.size > 2 * 1024 * 1024) {
-        alert("Ukuran file terlalu besar! Maksimal 2MB.");
+        // alert("Ukuran file terlalu besar! Maksimal 2MB.");
+        toast.error("Ukuran file terlalu besar: Maksimal 2 MB")
         return;
       }
 
